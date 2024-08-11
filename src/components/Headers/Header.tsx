@@ -145,7 +145,7 @@ const Header = () => {
             sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
           >
             {pages.map((page, index) => (
-              <Link href={page.link}>
+              <Link key={index} href={page.link}>
                 <Button
                   key={index}
                   sx={{
