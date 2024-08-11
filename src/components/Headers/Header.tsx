@@ -1,3 +1,7 @@
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+import SearchIcon from "@mui/icons-material/Search";
+import SettingsIcon from "@mui/icons-material/Settings";
+import WidgetsIcon from "@mui/icons-material/Widgets";
 import {
   Avatar,
   Box,
@@ -11,35 +15,44 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { IoIosLogIn } from "react-icons/io";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { clearAuth } from "../../redux/slice/AuthSlice";
 import FlexBox from "../FlexBox";
 import WidthLayout from "../layout/WidthLayout";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import WidgetsIcon from "@mui/icons-material/Widgets";
-import SearchHeader from "./SearchHeader";
-import UploadIcon from "@mui/icons-material/Upload";
-import FeedbackIcon from "@mui/icons-material/Feedback";
-import useWidth from "../../hooks/useWidth";
-import SearchIcon from "@mui/icons-material/Search";
-import Popup from "./Popup";
 import NavBar from "./NavBar";
+import Popup from "./Popup";
 import SearchMobile from "./SearchMobile";
-import Link from "next/link";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { useRouter } from "next/router";
-import { clearAuth } from "../../redux/slice/AuthSlice";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import SettingsIcon from "@mui/icons-material/Settings";
 import SettingsNav from "./SettingsNav";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
 
+import { PiTrademarkRegistered } from "react-icons/pi";
+
+const pages = [
+  {
+    name: "Hồi sinh ngọc rồng",
+    link: "/",
+  },
+  {
+    name: "Liên quân",
+    link: "/lien-quan",
+  },
+  {
+    name: "Free fire",
+    link: "/free-fire",
+  },
+];
 const Header = () => {
   const [openNavbar, setOpenNavbar] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const [openSetting, setOpenSetting] = useState(false);
+
   const {
-    palette: { secondary },
-  } = useTheme();
+    palette: { secondary, grey, primary },
+  }: any = useTheme();
 
   const { user } = useAppSelector((state) => state.Auth);
   const dispatch = useAppDispatch();
@@ -47,6 +60,7 @@ const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -56,6 +70,8 @@ const Header = () => {
   };
 
   const router = useRouter();
+
+  console.log(router);
 
   const handleLogout = () => {
     dispatch(clearAuth());
@@ -87,26 +103,67 @@ const Header = () => {
             },
           }}
           alignItems={"center"}
-          justifyContent='space-between'
+          justifyContent="space-between"
         >
           <Stack direction={"row"} spacing={1}>
-            <Link href='/'>
+            <Link href="/">
               <LazyLoadImage
                 alt={"tailieuthi.site"}
                 src={"/logo2.jpg"} // use normal <img> attributes as props
                 style={{ borderRadius: "50%", width: "50px" }}
               />
             </Link>
-            <IconButton id='barPC'>
-              <WidgetsIcon />
-              <Popup />
-            </IconButton>
+
+            {/* <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu> */}
           </Stack>
-          <Box>
-            <SearchHeader />
-          </Box>
+          <FlexBox
+            alignItems={"center"}
+            justifyContent="center"
+            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
+          >
+            {pages.map((page, index) => (
+              <Link href={page.link}>
+                <Button
+                  key={index}
+                  sx={{
+                    color:
+                      router.route == page.link
+                        ? primary[500]
+                        : (grey as any)["text"],
+                    px: 4,
+                    display: "block",
+                  }}
+                >
+                  {page.name}
+                </Button>
+              </Link>
+            ))}
+          </FlexBox>
           <Stack direction={"row"} spacing={1}>
-            <Link href='/tai-len'>
+            {/* <Link href='/tai-len'>
               <Button
                 variant='contained'
                 color='primary'
@@ -114,8 +171,8 @@ const Header = () => {
               >
                 Tải lên
               </Button>
-            </Link>
-            <Link href='/gop-y'>
+            </Link> */}
+            {/* <Link href='/gop-y'>
               <Button
                 variant='contained'
                 color='warning'
@@ -123,37 +180,38 @@ const Header = () => {
               >
                 Góp ý
               </Button>
-            </Link>
-            <Box
+            </Link> */}
+            {/* <Box
               sx={{ width: "1px", height: "20", backgroundColor: "#ccc" }}
-            ></Box>
+            ></Box> */}
             {!user && (
               <Link href={"/dang-nhap"}>
-                <Button variant='outlined' color='info'>
-                  Đăng nhập
+                <Button variant="outlined" color="info">
+                  <IoIosLogIn size={20} className="mr-1" /> Đăng nhập
                 </Button>
               </Link>
             )}
             {!user && (
               <Link href={"/dang-ky"}>
-                <Button variant='outlined' color='info'>
+                <Button variant="outlined" color="info">
+                  <PiTrademarkRegistered className="mr-1" size={20} />
                   Đăng ký
                 </Button>
               </Link>
             )}
             {user && (
               <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title='Open settings'>
+                <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar
-                      alt='Remy Sharp'
+                      alt="Remy Sharp"
                       src={`${user.avatar || "/static/images/avatar/2.jpg"}`}
                     />
                   </IconButton>
                 </Tooltip>
                 <Menu
                   sx={{ mt: "45px" }}
-                  id='menu-appbar'
+                  id="menu-appbar"
                   anchorEl={anchorElUser}
                   anchorOrigin={{
                     vertical: "top",
@@ -168,21 +226,21 @@ const Header = () => {
                   onClose={handleCloseUserMenu}
                 >
                   <MenuItem onClick={() => router.push("/tai-lieu-cua-toi")}>
-                    <Typography textAlign='center'>
+                    <Typography textAlign="center">
                       {"Tài liệu của tôi"}
                     </Typography>
                   </MenuItem>
                   <MenuItem onClick={() => router.push("/tai-lieu-da-luu")}>
-                    <Typography textAlign='center'>
+                    <Typography textAlign="center">
                       {"Tài liệu đã lưu"}
                     </Typography>
                   </MenuItem>
                   <MenuItem onClick={() => router.push("/cai-dat")}>
-                    <Typography textAlign='center'>{"Cài đặt"}</Typography>
+                    <Typography textAlign="center">{"Cài đặt"}</Typography>
                   </MenuItem>
                   <Divider />
                   <MenuItem onClick={handleLogout}>
-                    <Typography textAlign='center'>{"Đăng xuất"}</Typography>
+                    <Typography textAlign="center">{"Đăng xuất"}</Typography>
                   </MenuItem>
                 </Menu>
               </Box>
@@ -200,17 +258,17 @@ const Header = () => {
             },
           }}
           alignItems={"center"}
-          justifyContent='space-between'
+          justifyContent="space-between"
         >
           <FlexBox>
             <IconButton onClick={() => setOpenNavbar(!openNavbar)}>
-              <WidgetsIcon fontSize='medium' />
+              <WidgetsIcon fontSize="medium" />
             </IconButton>
             <IconButton onClick={() => router.push("/tai-len")}>
-              <FileUploadIcon fontSize='medium' />
+              <FileUploadIcon fontSize="medium" />
             </IconButton>
           </FlexBox>
-          <Link href='/'>
+          <Link href="/">
             <LazyLoadImage
               alt={"tailieuthi.site"}
               src={"/logo2.jpg"} // use normal <img> attributes as props
@@ -219,7 +277,7 @@ const Header = () => {
           </Link>
           <FlexBox alignItems={"center"}>
             <IconButton onClick={() => setOpenSearch(!openSearch)}>
-              <SearchIcon fontSize='medium' />
+              <SearchIcon fontSize="medium" />
             </IconButton>
             <IconButton onClick={() => setOpenSetting(true)}>
               <SettingsIcon />

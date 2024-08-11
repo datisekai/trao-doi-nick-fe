@@ -5,6 +5,7 @@ import Section1 from "../components/sections/Section1";
 import Section2 from "../components/sections/Section2";
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 import { increment, decrement } from "../redux/slice";
+import Filter1 from "../components/Filter/Filter1";
 
 const Home = () => {
   const { value } = useAppSelector((state) => state.counter);
@@ -13,18 +14,19 @@ const Home = () => {
 
   const {
     palette: { grey },
-  } = useTheme();
+  }: any = useTheme();
 
   console.log(user);
 
   return (
-    <MainLayout>
+    <MainLayout isSlider={false}>
       <Box bgcolor={grey[900]} sx={{ minHeight: "100vh", pb: 10 }}>
-        <Section1 title='Mới cập nhật' />
-        <Section1 title='Top lượt xem' />
-        <Section1 title='Top yêu thích' />
-        <Section2 title='Đại học Sài Gòn' />
-        <Section2 title='Đại học Sư Phạm' />
+        <Filter1 />
+        <Section1 title="" />
+        {/* <Section1 title="Top lượt xem" /> */}
+        {/* <Section1 title="Top yêu thích" /> */}
+        {/* <Section2 title="Đại học Sài Gòn" /> */}
+        {/* <Section2 title="Đại học Sư Phạm" /> */}
       </Box>
     </MainLayout>
   );
