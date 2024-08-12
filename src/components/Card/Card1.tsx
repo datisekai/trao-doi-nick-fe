@@ -4,6 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
+import LinkMUI from "@mui/icons-material/Link";
 import { FaCaretRight } from "react-icons/fa6";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import FlexBox from "../FlexBox";
@@ -60,6 +61,7 @@ export default function Card1() {
             cursor: "pointer",
           },
           position: "relative",
+          marginX: "auto",
         }}
       >
         <LazyLoadImage
@@ -86,9 +88,15 @@ export default function Card1() {
                 fontSize={14}
                 component="span"
                 color="primary"
+                sx={{
+                  ":hover": {
+                    textDecoration: "underline",
+                  },
+                }}
               >
                 datisekai
               </Typography>
+
               <Typography
                 color="primary"
                 gutterBottom
