@@ -198,8 +198,8 @@ const Filter1 = () => {
         <Typography color="text.primary" fontSize={17} fontWeight={"bold"}>
           Bộ lọc tìm kiếm
         </Typography>
-        <Box mt={1} sx={{ backgroundColor: "secondary.main", borderRadius: 2 }}>
-          <Grid container spacing={1} p={3}>
+        <Box mt={2} sx={{ backgroundColor: "secondary.main", borderRadius: 2 }}>
+          <Grid container spacing={2} p={3}>
             {filterSchemas.map((item, index) => {
               const { key, label, type, options = [] } = item;
 
@@ -210,13 +210,17 @@ const Filter1 = () => {
                       label={label}
                       className="w-full"
                       variant="outlined"
-                      size="medium"
+                      size="small"
                     />
                   )}
                   {type === "select" && (
                     <FormControl fullWidth>
                       <InputLabel>{label}</InputLabel>
-                      <Select label={label} size="medium">
+                      <Select
+                        defaultValue={options[0].value}
+                        label={label}
+                        size="small"
+                      >
                         {options.map((option) => (
                           <MenuItem key={option.value} value={option.value}>
                             {option.label}
@@ -234,20 +238,20 @@ const Filter1 = () => {
                 className="w-full h-full"
                 variant="contained"
                 color="primary"
-                size="large"
+                size="small"
               >
                 Áp dụng
               </Button>
             </Grid>
           </Grid>
 
-          <Box px={1} sx={{ borderBottom: 1, borderColor: "divider" }}>
+          {/* <Box px={1} sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs>
               <Tab label="Item One" {...a11yProps(0)} />
               <Tab label="Item Two" {...a11yProps(1)} />
               <Tab label="Item Three" {...a11yProps(2)} />
             </Tabs>
-          </Box>
+          </Box> */}
         </Box>
         {/* <CustomTabPanel value={value} index={0}>
           Item One

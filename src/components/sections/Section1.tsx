@@ -12,13 +12,13 @@ const Section1: FC<Section1Props> = ({ title }) => {
     <Box pt={3}>
       <WidthLayout>
         {title && (
-          <Typography color='text.primary' fontSize={17} fontWeight={"bold"}>
+          <Typography color="text.primary" fontSize={17} fontWeight={"bold"}>
             {title}
           </Typography>
         )}
         <Grid container spacing={2} mt={-1}>
           {[1, 2, 3, 4, 5, 6, 7, 8].map((item: number) => (
-            <Grid item xs={6} md={4} lg={3} key={item}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={item}>
               <Card1 />
             </Grid>
           ))}
